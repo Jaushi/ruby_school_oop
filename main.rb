@@ -1,6 +1,7 @@
 require_relative 'student'
 require_relative 'course'
 require_relative 'subject'
+require_relative 'teacher'
 
 def add_student
   puts "|ADD STUDENT|"
@@ -32,7 +33,7 @@ def remove_student
   student = Student.find(destroy_student)
   if student
     if student.destroy
-      puts "Student destroyed successfully"
+      puts "Student destroyed successfully!"
     else
       puts "Failed to destroy from the record."
     end
@@ -82,7 +83,7 @@ def add_subject
   subject.save
 
   if Subject.find(add_subject_id)
-    puts "Course added successfully!"
+    puts "Subject added successfully!"
     puts subject.display
   else
     puts "Failed to add student."
@@ -102,6 +103,47 @@ def remove_subject
     end
   else
     puts "Subject not found."
+  end
+end
+
+def add_teacher
+  puts "|ADD TEACHER|"
+  add_id = Student.all.size + 1
+  print "Enter Teacher Name:"
+  add_name = gets.chomp
+  print "Enter Teacher Birth date 'mm/dd/yy':"
+  add_birth_date = gets.chomp
+  print "Enter Teacher Email:"
+  add_email = gets.chomp
+  print "Enter Teacher Phone Number:"
+  add_phone_number = gets.chomp
+  print "Enter Teacher Department:"
+  add_department = gets.chomp
+
+  teacher = Teacher.new(add_id, add_name, add_birth_date, add_email, add_phone_number, add_department)
+  teacher.save
+
+  if Teacher.find(add_id)
+    puts "Teacher added successfully!"
+    puts teacher.display
+  else
+    puts "Failed to add teacher."
+  end
+end
+
+def remove_teacher
+  print "Enter Teacher ID to delete:"
+  destroy_teacher = gets.chomp.to_i
+
+  teacher = Teacher.find(destroy_teacher)
+  if teacher
+    if teacher.destroy
+      puts "Teacher destroyed successfully!"
+    else
+      puts "Failed to destroy from the record."
+    end
+  else
+    puts "Teacher not found."
   end
 end
 
@@ -152,11 +194,26 @@ def subject_management
   end
 end
 
+def teacher_management
+  puts "[1] Add Teacher"
+  puts "[2] Delete Teacher"
+  print "Enter an Action to do: "
+  choice = gets.chomp.to_i
+
+  if choice == 1
+    add_teacher
+  end
+  if choice == 2
+    remove_teacher
+  end
+end
+
 program_choice = nil
 while program_choice != 0
   puts "[1] Student Management"
   puts "[2] Course Management"
   puts "[3] Subject Management"
+  puts "[4] Teacher Management"
   puts "[0] Exit Program"
   print "Enter a Program to Access: "
   program_choice = gets.chomp.to_i
@@ -168,9 +225,11 @@ while program_choice != 0
     course_management
   when 3
     subject_management
+  when 4
+    teacher_management
   when 0
     quit_program
   else
-    puts "Invalid choice. Enter 1, 2, 3, 0."
+    puts "Invalid choice. Enter 1, 2, 3, 4, 0."
   end
 end
