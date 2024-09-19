@@ -8,7 +8,7 @@ class Subject
   end
 
   def save
-    @@record.prepend(self)
+    @@record. << self
   end
 
   def destroy

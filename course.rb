@@ -8,7 +8,7 @@ class Course
   end
 
   def save
-    @@record.prepend(self)
+    @@record. << self
   end
 
   def destroy

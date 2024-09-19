@@ -3,9 +3,6 @@ require_relative 'course'
 require_relative 'subject'
 require_relative 'teacher'
 
-def clear_terminal
-  system("clear") || system("cls")
-end
 def add_student
   puts "|ADD STUDENT|"
   add_id = Student.all.size + 1
@@ -111,7 +108,7 @@ end
 
 def add_teacher
   puts "|ADD TEACHER|"
-  add_id = Student.all.size + 1
+  add_id = Teacher.all.size + 1
   print "Enter Teacher Name:"
   add_name = gets.chomp
   print "Enter Teacher Birth date 'mm/dd/yy':"
@@ -158,6 +155,7 @@ end
 def student_management
   puts "[1] Add Student"
   puts "[2] Delete Student"
+  puts "[3] Display Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -167,11 +165,15 @@ def student_management
   if choice == 2
     remove_student
   end
+  if choice == 3
+    Student.all.each {|student| puts student.display}
+  end
 end
 
 def course_management
   puts "[1] Add Course"
   puts "[2] Delete Course"
+  puts "[3] Display Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -181,11 +183,15 @@ def course_management
   if choice == 2
     remove_course
   end
+  if choice == 3
+    Course.all.each {|course| puts course.display}
+  end
 end
 
 def subject_management
   puts "[1] Add Subject"
   puts "[2] Delete Subject"
+  puts "[3] Display Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -195,11 +201,15 @@ def subject_management
   if choice == 2
     remove_subject
   end
+  if choice == 3
+    Subject.all.each {|subject| puts subject.display}
+  end
 end
 
 def teacher_management
   puts "[1] Add Teacher"
   puts "[2] Delete Teacher"
+  puts "[3] Display Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -208,6 +218,9 @@ def teacher_management
   end
   if choice == 2
     remove_teacher
+  end
+  if choice == 3
+    Teacher.all.each {|teacher| puts teacher.display}
   end
 end
 
@@ -224,16 +237,12 @@ while program_choice != 0
   case program_choice
   when 1
     student_management
-    clear_terminal
   when 2
     course_management
-    clear_terminal
   when 3
     subject_management
-    clear_terminal
   when 4
     teacher_management
-    clear_terminal
   when 0
     quit_program
   else

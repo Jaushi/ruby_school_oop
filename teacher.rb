@@ -12,7 +12,7 @@ class Teacher
   end
 
   def save
-    @@record.prepend(self)
+    @@record << self
   end
 
   def destroy
