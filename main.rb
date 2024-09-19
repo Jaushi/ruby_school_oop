@@ -42,6 +42,21 @@ def remove_student
   end
 end
 
+def edit_student
+  if student
+    print "Enter new Student Name (current: #{student.name}): "
+    student.name = gets.chomp
+    print "Enter new Student Birth date 'mm/dd/yy' (current: #{student.birth_date}): "
+    student.birth_date = gets.chomp
+    print "Enter new Student Email (current: #{student.email}): "
+    student.email = gets.chomp
+    print "Enter new Student Phone Number (current: #{student.phone_number}): "
+    student.phone_number = gets.chomp
+  else
+    puts "Student not found."
+  end
+end
+
 def add_course
   puts "|ADD COURSE|"
   add_course_id = Course.all.size + 1
@@ -74,6 +89,19 @@ def remove_course
   end
 end
 
+def edit_course
+  print "Enter Course ID to edit: "
+  edit_id = gets.chomp.to_i
+  course = Course.find(edit_id)
+  if course
+    print "Enter new Course Name (current: #{course.name}): "
+    course.name = gets.chomp
+    course.save
+  else
+    puts "Course not found."
+  end
+end
+
 def add_subject
   puts "|ADD SUBJECT|"
   add_subject_id = Subject.all.size + 1
@@ -101,6 +129,19 @@ def remove_subject
     else
       puts "Failed to destroy from the record."
     end
+  else
+    puts "Subject not found."
+  end
+end
+
+def edit_subject
+  print "Enter Subject ID to edit: "
+  edit_id = gets.chomp.to_i
+  subject = Subject.find(edit_id)
+  if subject
+    print "Enter new Subject Name (current: #{subject.name}): "
+    subject.name = gets.chomp
+    subject.save
   else
     puts "Subject not found."
   end
@@ -147,6 +188,29 @@ def remove_teacher
   end
 end
 
+def edit_teacher
+  print "Enter Teacher ID to edit: "
+  edit_id = gets.chomp.to_i
+
+  teacher = Teacher.find(edit_id)
+  if teacher
+    print "Enter new Teacher Name (current: #{teacher.name}): "
+    teacher.name = gets.chomp
+    print "Enter new Teacher Birth date 'mm/dd/yy' (current: #{teacher.birth_date}): "
+    teacher.birth_date = gets.chomp
+    print "Enter new Teacher Email (current: #{teacher.email}): "
+    teacher.email = gets.chomp
+    print "Enter new Teacher Phone Number (current: #{teacher.phone_number}): "
+    teacher.phone_number = gets.chomp
+    print "Enter new Teacher Department (current: #{teacher.department}): "
+    teacher.department = gets.chomp
+
+    teacher.save
+  else
+    puts "Teacher not found."
+  end
+end
+
 def quit_program
   puts "Exiting..."
   exit
@@ -156,6 +220,7 @@ def student_management
   puts "[1] Add Student"
   puts "[2] Delete Student"
   puts "[3] Display Record"
+  puts "[4] Edit Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -168,12 +233,16 @@ def student_management
   if choice == 3
     Student.all.each {|student| puts student.display}
   end
+  if choice == 4
+    edit_student
+  end
 end
 
 def course_management
   puts "[1] Add Course"
   puts "[2] Delete Course"
   puts "[3] Display Record"
+  puts "[4] Edit Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -186,12 +255,16 @@ def course_management
   if choice == 3
     Course.all.each {|course| puts course.display}
   end
+  if choice == 4
+    edit_course
+  end
 end
 
 def subject_management
   puts "[1] Add Subject"
   puts "[2] Delete Subject"
   puts "[3] Display Record"
+  puts "[4] Edit Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -204,12 +277,16 @@ def subject_management
   if choice == 3
     Subject.all.each {|subject| puts subject.display}
   end
+  if choice == 4
+    edit_subject
+  end
 end
 
 def teacher_management
   puts "[1] Add Teacher"
   puts "[2] Delete Teacher"
   puts "[3] Display Record"
+  puts "[4] Edit Record"
   print "Enter an Action to do: "
   choice = gets.chomp.to_i
 
@@ -221,6 +298,9 @@ def teacher_management
   end
   if choice == 3
     Teacher.all.each {|teacher| puts teacher.display}
+  end
+  if choice == 4
+    edit_teacher
   end
 end
 

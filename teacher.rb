@@ -13,11 +13,23 @@ class Teacher
   end
 
   def save
-    @@record << self
+    existing_record = self.class.find(@id)
+    if existing_record
+      existing_record.name = @name
+      existing_record.birth_date = @birth_date
+      existing_record.email = @email
+      existing_record.phone_number = @phone_number
+      existing_record.department = @department
+      existing_record.deleted_at = @deleted_at
+      puts "#{self.class} updated successfully!"
+    else
+      @@record << self
+      puts "#{self.class} created successfully!"
+    end
   end
 
   def destroy
-    deleted_at = Time.now
+    @deleted_at = Time.now
   end
 
   def display
@@ -25,7 +37,7 @@ class Teacher
   end
 
   def self.all
-    @@record.select { |teacher| teacher.deleted_at.nil? }
+    @@record.select { |teacher| Ateacher.deleted_at.nil? }
   end
 
   def self.find(id)

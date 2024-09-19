@@ -9,15 +9,23 @@ class Course
   end
 
   def save
-    @@record. << self
+    existing_record = self.class.find(@id)
+    if existing_record
+      existing_record.name = @name
+      existing_record.deleted_at = @deleted_at
+      puts "Course updated successfully!"
+    else
+      @@record << self
+      puts "Course created successfully!"
+    end
   end
 
   def destroy
-    deleted_at = Time.now
+    @deleted_at = Time.now
   end
 
   def display
-    print "#{@id}: #{@name}"
+    "#{@id}: #{@name}"
   end
 
   def self.all
