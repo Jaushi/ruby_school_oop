@@ -40,15 +40,30 @@ def remove_student
   end
 end
 
-puts "[a]Add a Student"
-puts "[d]Delete a Student"
-puts "Enter action to do:"
-choice = gets.chomp.downcase
-
-if choice == 'a'
-  add_student
+def quit_program
+  puts "Exiting..."
+  exit
 end
 
-if choice == 'd'
-  remove_student
+def display_menu
+  puts "[a] Add a Student"
+  puts "[d] Delete a Student"
+  puts "[e] Exit Program"
+  print "Enter an Action to do: "
+end
+
+choice = nil
+while choice != 'e'
+  display_menu
+  choice = gets.chomp.downcase
+  case choice
+  when 'a'
+    add_student
+  when 'd'
+    remove_student
+  when 'e'
+    quit_program
+  else
+    puts "Invalid choice. Enter 'a', 'd', 'e'."
+  end
 end
