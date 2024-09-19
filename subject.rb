@@ -1,10 +1,11 @@
 class Subject
-  attr_accessor :id, :name
+  attr_accessor :id, :name, :deleted_at
   @@record = []
 
-  def initialize(id, name)
+  def initialize(id, name, deleted_at = nil)
     @id = id
     @name = name
+    @deleted_at = deleted_at
   end
 
   def save
@@ -12,7 +13,7 @@ class Subject
   end
 
   def destroy
-    @@record.delete(self)
+    deleted_at = Time.now
   end
 
   def display
@@ -20,10 +21,10 @@ class Subject
   end
 
   def self.all
-    @@record
+    @@record.select { |subject| subject.deleted_at.nil? }
   end
 
   def self.find(id)
-    @@record.detect { |subject| subject.id == id }
+    @@record.detect { |subject| subject.id == id && subject.deleted_at.nil? }
   end
 end
