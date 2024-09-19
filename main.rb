@@ -3,6 +3,9 @@ require_relative 'course'
 require_relative 'subject'
 require_relative 'teacher'
 
+def clear_terminal
+  system("clear") || system("cls")
+end
 def add_student
   puts "|ADD STUDENT|"
   add_id = Student.all.size + 1
@@ -221,12 +224,16 @@ while program_choice != 0
   case program_choice
   when 1
     student_management
+    clear_terminal
   when 2
     course_management
+    clear_terminal
   when 3
     subject_management
+    clear_terminal
   when 4
     teacher_management
+    clear_terminal
   when 0
     quit_program
   else
