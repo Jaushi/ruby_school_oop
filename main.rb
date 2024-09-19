@@ -1,5 +1,6 @@
 require_relative 'student'
 require_relative 'course'
+require_relative 'subject'
 
 def add_student
   puts "|ADD STUDENT|"
@@ -72,6 +73,38 @@ def remove_course
   end
 end
 
+def add_subject
+  puts "|ADD SUBJECT|"
+  add_subject_id = Subject.all.size + 1
+  print "Enter Subject Name:"
+  add_subject_name = gets.chomp
+  subject = Subject.new(add_subject_id, add_subject_name)
+  subject.save
+
+  if Subject.find(add_subject_id)
+    puts "Course added successfully!"
+    puts subject.display
+  else
+    puts "Failed to add student."
+  end
+end
+
+def remove_subject
+  print "Enter Course ID to delete:"
+  destroy_subject = gets.chomp.to_i
+
+  student = Subject.find(destroy_subject)
+  if student
+    if student.destroy
+      puts "Subject destroyed successfully!"
+    else
+      puts "Failed to destroy from the record."
+    end
+  else
+    puts "Subject not found."
+  end
+end
+
 def quit_program
   puts "Exiting..."
   exit
@@ -105,10 +138,25 @@ def course_management
   end
 end
 
+def subject_management
+  puts "[1] Add Subject"
+  puts "[2] Delete Subject"
+  print "Enter an Action to do: "
+  choice = gets.chomp.to_i
+
+  if choice == 1
+    add_subject
+  end
+  if choice == 2
+    remove_subject
+  end
+end
+
 program_choice = nil
 while program_choice != 0
   puts "[1] Student Management"
   puts "[2] Course Management"
+  puts "[3] Subject Management"
   puts "[0] Exit Program"
   print "Enter a Program to Access: "
   program_choice = gets.chomp.to_i
@@ -118,9 +166,11 @@ while program_choice != 0
     student_management
   when 2
     course_management
+  when 3
+    subject_management
   when 0
     quit_program
   else
-    puts "Invalid choice. Enter 1, 2, 0."
+    puts "Invalid choice. Enter 1, 2, 3, 0."
   end
 end
