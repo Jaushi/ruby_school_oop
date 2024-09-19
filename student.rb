@@ -19,7 +19,7 @@ class Student
   end
 
   def display
-    puts "Student ID #{@id}: #{@name}, #{@birth_date},#{@email}, #{@phone_number}"
+    print "Student ID #{@id}: #{@name}, #{@birth_date},#{@email}, #{@phone_number}"
   end
 
   def self.all

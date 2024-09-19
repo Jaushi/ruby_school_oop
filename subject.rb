@@ -16,7 +16,7 @@ class Subject
   end
 
   def display
-    puts "#{@id}: #{@name}"
+    print "#{@id}: #{@name}"
   end
 
   def self.all
