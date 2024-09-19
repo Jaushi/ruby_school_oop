@@ -14,8 +14,11 @@ def add_student
   add_email = gets.chomp
   print "Enter Student Phone Number:"
   add_phone_number = gets.chomp
-
-  student = Student.new(add_id, add_name, add_birth_date, add_email, add_phone_number)
+  puts "Available Courses: "
+  add_course_id = Course.all.each { |course| puts "ID: #{course.id}, Name: #{course.name}" }
+  print "Enter Course ID for the student: "
+  add_course_id = gets.chomp.to_i
+  student = Student.new(add_id, add_name, add_birth_date, add_email, add_phone_number, add_course_id)
   student.save
 
   if Student.find(add_id)
@@ -43,6 +46,10 @@ def remove_student
 end
 
 def edit_student
+  print "Enter Student ID to edit: "
+  edit_id = gets.chomp.to_i
+
+  student = Student.find(edit_id)
   if student
     print "Enter new Student Name (current: #{student.name}): "
     student.name = gets.chomp
@@ -52,10 +59,13 @@ def edit_student
     student.email = gets.chomp
     print "Enter new Student Phone Number (current: #{student.phone_number}): "
     student.phone_number = gets.chomp
+    student.save
+    puts "Student updated successfully!"
   else
     puts "Student not found."
   end
 end
+
 
 def add_course
   puts "|ADD COURSE|"
@@ -160,7 +170,6 @@ def add_teacher
   add_phone_number = gets.chomp
   print "Enter Teacher Department:"
   add_department = gets.chomp
-
   teacher = Teacher.new(add_id, add_name, add_birth_date, add_email, add_phone_number, add_department)
   teacher.save
 
