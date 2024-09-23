@@ -6,6 +6,7 @@ require_relative 'teacher'
 def clear_terminal
   system("clear") || system("cls")
 end
+
 def add_student
   puts "|ADD STUDENT|"
   add_id = Student.all.size + 1
@@ -156,58 +157,90 @@ def quit_program
 end
 
 def student_management
-  puts "[1] Add Student"
-  puts "[2] Delete Student"
-  print "Enter an Action to do: "
-  choice = gets.chomp.to_i
+  choice = nil
+  while choice != 3
+    puts "[1] Add Student"
+    puts "[2] Delete Student"
+    puts "[3] Back to school management"
+    print "Enter an Action to do: "
+    choice = gets.chomp.to_i
 
-  if choice == 1
-    add_student
-  end
-  if choice == 2
-    remove_student
+    case choice
+    when 1
+      add_student
+    when 2
+      remove_student
+    when 3
+      return
+    else
+      puts "Invalid choice. Enter 1, 2, 3."
+    end
   end
 end
 
 def course_management
-  puts "[1] Add Course"
-  puts "[2] Delete Course"
-  print "Enter an Action to do: "
-  choice = gets.chomp.to_i
+  choice = nil
+  while choice != 3
+    puts "[1] Add Course"
+    puts "[2] Delete Course"
+    puts "[3] Back to school management"
+    print "Enter an Action to do: "
+    choice = gets.chomp.to_i
 
-  if choice == 1
-    add_course
-  end
-  if choice == 2
-    remove_course
+    case choice
+    when 1
+      add_course
+    when 2
+      remove_course
+    when 3
+      return
+    else
+      puts "Invalid choice. Enter 1, 2, 3."
+    end
   end
 end
 
 def subject_management
-  puts "[1] Add Subject"
-  puts "[2] Delete Subject"
-  print "Enter an Action to do: "
-  choice = gets.chomp.to_i
+  choice = nil
+  while choice != 3
+    puts "[1] Add Subject"
+    puts "[2] Delete Subject"
+    puts "[3] Back to school management"
+    print "Enter an Action to do: "
+    choice = gets.chomp.to_i
 
-  if choice == 1
-    add_subject
-  end
-  if choice == 2
-    remove_subject
+    case choice
+    when 1
+      add_subject
+    when 2
+      remove_subject
+    when 3
+      return
+    else
+      puts "Invalid choice. Enter 1, 2, 3."
+    end
   end
 end
 
 def teacher_management
-  puts "[1] Add Teacher"
-  puts "[2] Delete Teacher"
-  print "Enter an Action to do: "
-  choice = gets.chomp.to_i
+  choice = nil
+  while choice != 3
+    puts "[1] Add Teacher"
+    puts "[2] Delete Teacher"
+    puts "[3] Back to school management"
+    print "Enter an Action to do: "
+    choice = gets.chomp.to_i
 
-  if choice == 1
-    add_teacher
-  end
-  if choice == 2
-    remove_teacher
+    case choice
+    when 1
+      add_teacher
+    when 2
+      remove_teacher
+    when 3
+      return
+    else
+      puts "Invalid choice. Enter 1, 2, 3."
+    end
   end
 end
 
@@ -218,7 +251,7 @@ while program_choice != 0
   puts "[3] Subject Management"
   puts "[4] Teacher Management"
   puts "[0] Exit Program"
-  print "Enter a Program to Access: "
+  print "Choose to Access the program: "
   program_choice = gets.chomp.to_i
 
   case program_choice
@@ -239,4 +272,5 @@ while program_choice != 0
   else
     puts "Invalid choice. Enter 1, 2, 3, 4, 0."
   end
+  clear_terminal
 end
