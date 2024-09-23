@@ -35,4 +35,12 @@ class Course
   def self.find(id)
     @@record.detect { |course| course.id == id && course.deleted_at.nil? }
   end
+
+  def students
+    Student.all.select { |student| student.course_id == @id }
+  end
+
+  def subjects
+    Subject.all.select { |subject| subject.course_id == @id }
+  end
 end

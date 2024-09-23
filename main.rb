@@ -2,6 +2,7 @@ require_relative 'student'
 require_relative 'course'
 require_relative 'subject'
 require_relative 'teacher'
+require_relative 'course_subject'
 
 def add_student
   puts "|ADD STUDENT|"
@@ -102,12 +103,24 @@ def display_course
   print "Enter Course ID to display: "
   course_id = gets.chomp.to_i
   course = Course.find(course_id)
-  
+
   if course
     puts "Course Details:"
     puts "ID: #{course.id}, Name: #{course.name}"
+
     puts "Subjects in this Course:"
-    course.subjects.each { |subject| puts "ID: #{subject.id}, Name: #{subject.name}" }
+    if course.subjects.empty?
+      puts "No subjects assigned to this course."
+    else
+      course.subjects.each { |subject| puts "ID: #{subject.id}, Name: #{subject.name}" }
+    end
+
+    puts "Students in this Course:"
+    if course.students.empty?
+      puts "No students enrolled in this course."
+    else
+      course.students.each { |student| puts "ID: #{student.id}, Name: #{student.name}" }
+    end
   else
     puts "Course not found."
   end
