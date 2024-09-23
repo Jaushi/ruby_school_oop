@@ -48,4 +48,9 @@ class Student
   def self.find_by_email(email)
     @@record.detect { |student| student.email == email }
   end
+
+  def subjects
+    student_subjects = StudentSubject.find_by_student_id(@id)
+    student_subjects.map { |ss| Subject.find(ss.subject_id) }
+  end
 end

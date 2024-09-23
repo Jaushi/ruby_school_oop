@@ -45,6 +45,7 @@ def assign_subjects_to_student(student, course)
 end
 
 def remove_student
+
   print "Enter Student ID to delete:"
   destroy_student = gets.chomp.to_i
 
@@ -55,6 +56,24 @@ def remove_student
     else
       puts "Failed to destroy from the record."
     end
+  else
+    puts "Student not found."
+  end
+end
+
+def display_student
+  print "Enter Student ID: "
+  student_id = gets.chomp.to_i
+  student = Student.find_by(id: student_id)
+  
+  if student
+    puts "Student Details:"
+    puts "ID: #{student.id}"
+    puts "Name: #{student.name}"
+    puts "Birth Date: #{student.birth_date}"
+    puts "Email: #{student.email}"
+    puts "Phone Number: #{student.phone_number}"
+    puts "Enrolled Subjects: #{student.subjects.join(', ')}"
   else
     puts "Student not found."
   end
@@ -339,7 +358,7 @@ def student_management
     when 2
       remove_student
     when 3
-      Student.all.each { |student| puts student.display }
+      display_student
     when 4
       edit_student
     when 0

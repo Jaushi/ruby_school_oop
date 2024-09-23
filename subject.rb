@@ -6,6 +6,7 @@ class Subject
     @id = id
     @name = name
     @deleted_at = deleted_at
+    @@record << self
   end
 
   def save
@@ -25,7 +26,7 @@ class Subject
   end
 
   def display
-    print "#{@id}: #{@name}"
+    puts "#{@id}: #{@name}"
   end
 
   def self.all

@@ -28,5 +28,9 @@ class StudentSubject
     def self.find(id)
       @@record.detect { |course| course.id == id && course.deleted_at.nil? }
     end
+
+    def self.find_by_student_id(student_id)
+      @@record.select { |record| record.student_id == student_id && record.deleted_at.nil? }
+    end
   end
   
