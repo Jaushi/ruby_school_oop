@@ -10,16 +10,7 @@ class CourseSubject
   end
 
   def save
-    existing_record = self.class.find(@id)
-    if existing_record
-      existing_record.course_id = @course_id
-      existing_record.subject_id = @subject_id
-      existing_record.deleted_at = @deleted_at
-      puts "Course Subject updated successfully!"
-    else
-      @@record << self
-      puts "Course Subject created successfully!"
-    end
+    @@record << self
   end
 
   def destroy

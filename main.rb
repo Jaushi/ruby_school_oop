@@ -99,8 +99,48 @@ def remove_course
 end
 
 def display_course
-  Course.all.each { |course| puts course.display }
+  print "Enter Course ID to display: "
+  course_id = gets.chomp.to_i
+  course = Course.find(course_id)
+  
+  if course
+    puts "Course Details:"
+    puts "ID: #{course.id}, Name: #{course.name}"
+    puts "Subjects in this Course:"
+    course.subjects.each { |subject| puts "ID: #{subject.id}, Name: #{subject.name}" }
+  else
+    puts "Course not found."
+  end
 end
+
+def add_subject_to_course
+  puts "Available Courses: "
+  Course.all.each { |course| puts "ID: #{course.id}, Name: #{course.name}" }
+  
+  print "Enter Course ID to add subjects: "
+  course_id = gets.chomp.to_i
+  course = Course.find(course_id)
+  
+  if course
+    puts "Available Subjects:"
+    Subject.all.each { |subject| puts "ID: #{subject.id}, Name: #{subject.name}" }
+    
+    print "Enter Subject ID to add to the course: "
+    subject_id = gets.chomp.to_i
+    subject = Subject.find(subject_id)
+    
+    if subject
+      course.add_subject(subject)
+      course.save
+      puts "Subject #{subject.name} added to course #{course.name}."
+    else
+      puts "Subject not found."
+    end
+  else
+    puts "Course not found."
+  end
+end
+
 def edit_course
   print "Enter Course ID to edit: "
   edit_id = gets.chomp.to_i
@@ -109,6 +149,35 @@ def edit_course
     print "Enter new Course Name (current: #{course.name}): "
     course.name = gets.chomp
     course.save
+  else
+    puts "Course not found."
+  end
+end
+
+def remove_subject_course
+  print "Enter Course ID to remove subjects: "
+  course_id = gets.chomp.to_i
+  course = Course.find(course_id)
+  
+  if course
+    if course.subjects.empty?
+      puts "No subjects assigned to this course."
+    else
+      puts "Subjects in this Course:"
+      course.subjects.each { |subject| puts "ID: #{subject.id}, Name: #{subject.name}" }
+      
+      print "Enter Subject ID to remove from the course: "
+      subject_id = gets.chomp.to_i
+      subject = course.subjects.find { |s| s.id == subject_id }
+      
+      if subject
+        course.remove_subject(subject)
+        course.save
+        puts "Subject #{subject.name} removed from course #{course.name}."
+      else
+        puts "Subject not found in this course."
+      end
+    end
   else
     puts "Course not found."
   end
@@ -261,6 +330,8 @@ def course_management
     puts "[2] Delete Course"
     puts "[3] Display Record"
     puts "[4] Edit Record"
+    puts "[5] Add Subjects to a Course"
+    puts "[6] Remove Subjects from a Course"
     puts "[0] Back to school management"
     print "Enter an Action to do: "
     choice = gets.chomp.to_i
@@ -274,6 +345,10 @@ def course_management
       display_course
     when 4
       edit_course
+    when 5
+      add_subject_to_course
+    when 6 
+      remove_subject_course
     when 0
       return
     else
