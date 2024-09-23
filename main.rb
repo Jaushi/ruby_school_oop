@@ -98,6 +98,9 @@ def remove_course
   end
 end
 
+def display_course
+  Course.all.each { |course| puts course.display }
+end
 def edit_course
   print "Enter Course ID to edit: "
   edit_id = gets.chomp.to_i
@@ -268,7 +271,7 @@ def course_management
     when 2
       remove_course
     when 3
-      Course.all.each { |course| puts course.display }
+      display_course
     when 4
       edit_course
     when 0
