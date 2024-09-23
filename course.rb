@@ -1,29 +1,38 @@
 class Course
-  attr_accessor :id, :name
+  attr_accessor :id, :name, :deleted_at
   @@record = []
 
-  def initialize(id, name)
+  def initialize(id, name, deleted_at = nil)
     @id = id
     @name = name
+    @deleted_at = deleted_at
   end
 
   def save
-    @@record.prepend(self)
+    existing_record = self.class.find(@id)
+    if existing_record
+      existing_record.name = @name
+      existing_record.deleted_at = @deleted_at
+      puts "Course updated successfully!"
+    else
+      @@record << self
+      puts "Course created successfully!"
+    end
   end
 
   def destroy
-    @@record.delete(self)
+    @deleted_at = Time.now
   end
 
   def display
-    puts "#{@id}: #{@name}"
+    "#{@id}: #{@name}"
   end
 
   def self.all
-    @@record
+    @@record.select { |course| course.deleted_at.nil? }
   end
 
   def self.find(id)
-    @@record.detect { |course| course.id == id }
+    @@record.detect { |course| course.id == id && course.deleted_at.nil? }
   end
 end

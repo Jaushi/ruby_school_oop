@@ -1,33 +1,48 @@
 class Student
-  attr_accessor :id, :name, :birth_date, :email, :phone_number
+  attr_accessor :id, :name, :birth_date, :email, :phone_number, :deleted_at, :course_id
   @@record = []
 
-  def initialize(id, name, birth_date, email, phone_number)
+  def initialize(id, name, birth_date, email, phone_number, course_id = nil, deleted_at = nil)
     @id = id
     @name = name
     @birth_date = birth_date
     @email = email
     @phone_number = phone_number
+    @course_id = course_id # Ensure course_id is initialized
+    @deleted_at = deleted_at
   end
 
   def save
-    @@record.prepend(self)
+    existing_record = self.class.find(@id)
+    if existing_record
+      existing_record.name = @name
+      existing_record.birth_date = @birth_date
+      existing_record.email = @email
+      existing_record.phone_number = @phone_number
+      existing_record.course_id = @course_id
+      existing_record.deleted_at = @deleted_at
+      puts "Student updated successfully!"
+    else
+      @@record << self
+      puts "Student created successfully!"
+    end
   end
 
   def destroy
-    @@record.delete(self)
+    @deleted_at = Time.now
   end
 
   def display
-    puts "Student ID #{@id}: #{@name}, #{@birth_date},#{@email}, #{@phone_number}"
+    course_name = Course.find(@course_id)&.name || "No Course Assigned"
+    "ID: #{@id}, Name: #{@name}, Birth Date: #{@birth_date}, Email: #{@email}, Phone: #{@phone_number}, Course: #{course_name}"
   end
 
   def self.all
-    @@record
+    @@record.select { |student| student.deleted_at.nil? }
   end
 
   def self.find(id)
-    @@record.detect { |student| student.id == id }
+    @@record.detect { |student| student.id == id && student.deleted_at.nil? }
   end
 
   def self.find_by_email(email)
