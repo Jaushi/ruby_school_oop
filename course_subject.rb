@@ -14,7 +14,7 @@ class CourseSubject
   end
 
   def destroy
-    @@record
+    @deleted_at = Time.now
   end
 
   def display
