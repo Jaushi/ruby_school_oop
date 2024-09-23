@@ -8,7 +8,7 @@ class Student
     @birth_date = birth_date
     @email = email
     @phone_number = phone_number
-    @course_id = course_id # Ensure course_id is initialized
+    @course_id = course_id
     @deleted_at = deleted_at
   end
 

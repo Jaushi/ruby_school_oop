@@ -37,7 +37,7 @@ class Teacher
   end
 
   def self.all
-    @@record.select { |teacher| Ateacher.deleted_at.nil? }
+    @@record.select { |teacher| teacher.deleted_at.nil? }
   end
 
   def self.find(id)
