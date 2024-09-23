@@ -1,4 +1,4 @@
-class Teacher
+class Teacher < Person
   attr_accessor :id, :name, :birth_date, :email, :phone_number, :department, :deleted_at
   @@record = []
 

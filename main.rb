@@ -4,6 +4,7 @@ require_relative 'subject'
 require_relative 'teacher'
 require_relative 'course_subject'
 require_relative 'student_subject'
+require_relative 'person'
 
 def add_student
   puts "|ADD STUDENT|"

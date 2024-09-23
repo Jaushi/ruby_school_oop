@@ -33,4 +33,3 @@ class StudentSubject
       @@record.select { |record| record.student_id == student_id && record.deleted_at.nil? }
     end
   end
-  
