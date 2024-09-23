@@ -1,4 +1,4 @@
-class StudenSubject
+class StudentSubject
     attr_accessor :id, :student_id, :subject_id, :deleted_at
     @@record = []
   

@@ -3,6 +3,7 @@ require_relative 'course'
 require_relative 'subject'
 require_relative 'teacher'
 require_relative 'course_subject'
+require_relative 'student_subject'
 
 def add_student
   puts "|ADD STUDENT|"
@@ -25,9 +26,22 @@ def add_student
   if Student.find(add_id)
     puts "Student added successfully!"
     puts student.display
+    course = Course.find(add_course_id)
+    if course
+      assign_subjects_to_student(student, course)
+    else
+      puts "Course not found."
+    end
   else
     puts "Failed to add student."
   end
+end
+
+def assign_subjects_to_student(student, course)
+  course.subjects.each do |subject|
+    StudentSubject.new(student.id, subject.id).save
+  end
+  puts "Subjects assigned to student successfully!"
 end
 
 def remove_student
@@ -79,7 +93,7 @@ def add_course
     puts "Course added successfully!"
     puts course.display
   else
-    puts "Failed to add student."
+    puts "Failed to add Course."
   end
 end
 
@@ -208,7 +222,7 @@ def add_subject
     puts "Subject added successfully!"
     puts subject.display
   else
-    puts "Failed to add student."
+    puts "Failed to add Subject."
   end
 end
 
@@ -331,7 +345,7 @@ def student_management
     when 0
       return
     else
-      puts "Invalid choice. Enter 1, 2, 3."
+      puts "Invalid choice. Enter 1, 2, 3, 4, 0."
     end
   end
 end
@@ -365,7 +379,7 @@ def course_management
     when 0
       return
     else
-      puts "Invalid choice. Enter 1, 2, 3."
+      puts "Invalid choice. Enter 1, 2, 3, 4, 5, 6, 0."
     end
   end
 end
@@ -393,7 +407,7 @@ def subject_management
     when 0
       return
     else
-      puts "Invalid choice. Enter 1, 2, 3."
+      puts "Invalid choice. Enter 1, 2, 3, 4, 0."
     end
   end
 end
